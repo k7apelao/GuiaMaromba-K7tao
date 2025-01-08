@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Guia Maromba do K7tão</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', Arial, sans-serif;
+        }
+
+        /* Paleta de cores */
+        :root {
+            --cor-texto: #000;
+            --cor-fundo: #FFF;
+            --cor-nav: #000;
+            --cor-texto-nav: #FFF;
+            --cor-ativo-nav: #F4A261;
+            --cor-fundo-secundario: #F8F8F8;
+            --cor-rodape: #000;
+            --cor-texto-rodape: #FFF;
+        }
+
+        /* Estilos Gerais */
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Lato', Arial, sans-serif;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--cor-fundo_secundario);
+            color: var(--cor-texto);
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 17px;
+            color: var(--cor-texto);
+        }
+
+        /* Navegação */
+        nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: var(--cor-nav);
+            color: var(--cor-texto-nav);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+            font-size: 23px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: nowrap;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: var(--cor-texto-nav);
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+            font-size: 22px;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--cor-ativo-nav);
+            transform: scale(1.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--cor-ativo-nav);
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transition: width 0.3s, left 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+
+
+        /* Rodapé */
+        footer {
+            background-color: var(--cor-rodape);
+            color: var(--cor-texto-rodape);
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+            font-size: 0.8em;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 0.9em;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav-links a {
+                font-size: 1em;
+            }
+
+            .contact h2 {
+                font-size: 1.8em;
+            }
+
+            .contact p {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            header p {
+                font-size: 0.8em;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav-links a {
+                font-size: 0.9em;
+            }
+
+            .contact h2 {
+                font-size: 1.5em;
+            }
+
+            .contact p {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Guia Maromba do K7tão</h1>
+        <p>Seu guia para uma vida saudável e ativa</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="treinos.html" class="active">Treinos</a>
+                <a href="dieta.html">Dietas</a>
+                <a href="motivacao.html">Motivação</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="contato.html">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="content">
+        <h2>Treino de Peitoral</h2>
+        <p>Um treino focado no desenvolvimento do peitoral, com exercícios específicos.</p>
+
+        <h3>Partes do Peitoral</h3>
+        <ul>
+            <li><a href="#superior">Superior do Peito</a></li>
+            <li><a href="#inferior">Inferior do Peito</a></li>
+            <li><a href="#maior">Peitoral Maior</a></li>
+        </ul>
+
+        <div id="superior" class="exercise-section">
+            <h3>Superior do Peito</h3>
+            <ul>
+                <li>
+                    <h4>Supino Inclinado</h4>
+                    <p>3 séries de 10 repetições.</p>
+                </li>
+                <li>
+                    <h4>Flexões em Declínio</h4>
+                    <p>3 séries até a falha.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div id="inferior" class="exercise-section">
+            <h3>Inferior do Peito</h3>
+            <ul>
+                <li>
+                    <h4>Supino Declinado</h4>
+                    <p>3 séries de 10 repetições.</p>
+                </li>
+                <li>
+                    <h4>Chest Dips</h4>
+                    <p>3 séries até a falha.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div id="maior" class="exercise-section">
+            <h3>Peitoral Maior</h3>
+            <ul>
+                <li>
+                    <h4>Supino Reto</h4>
+                    <p>3 séries de 10 repetições.</p>
+                </li>
+                <li>
+                    <h4>Crossover</h4>
+                    <p>3 séries de 12 repetições.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Guia Maromba do K7tão. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+
+    </script>
+</body>
+
+</html>

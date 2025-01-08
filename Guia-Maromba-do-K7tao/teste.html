@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dieta - Guia Maromba do K7tão</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', Arial, sans-serif;
+        }
+
+        /* Paleta de cores */
+        :root {
+            --cor-texto: #000;
+            --cor-fundo: #FFF;
+            --cor-nav: #000;
+            --cor-texto-nav: #FFF;
+            --cor-ativo-nav: #F4A261;
+            --cor-fundo-secundario: #F8F8F8;
+            --cor-rodape: #000;
+            --cor-texto-rodape: #FFF;
+        }
+
+        /* Estilos Gerais */
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--cor-fundo-secundario);
+            color: var(--cor-texto);
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 17px;
+        }
+
+        /* Navegação */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--cor-nav);
+            color: var(--cor-texto-nav);
+            padding: 15px 0;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: var(--cor-texto-nav);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cor-ativo-nav);
+        }
+
+        /* Conteúdo */
+        .content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        /* Formulário */
+        .form-container {
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: var(--cor-fundo-secundario);
+            margin-bottom: 20px;
+        }
+
+        .form-container input,
+        .form-container select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            padding: 10px;
+            background-color: var(--cor-nav);
+            color: var(--cor-texto-nav);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: var(--cor-ativo-nav);
+        }
+
+        /* Gráfico */
+        .chart-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--cor-rodape);
+            color: var(--cor-texto-rodape);
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Guia Maromba do K7tão</h1>
+        <p>Seu guia para uma vida saudável e ativa</p>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="treinos.html">Treinos</a>
+            <a href="planinhatreino.html">Planilhas</a>
+            <a href="dieta.html" class="active">Dietas</a>
+            <a href="motivacao.html">Motivação</a>
+            <a href="dicas.html">Dicas</a>
+            <a href="contato.html">Contato</a>
+        </div>
+    </nav>
+
+    <section class="content">
+        <h2>Calcule Sua Dieta</h2>
+        <div class="form-container">
+            <select id="sexo">
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+            </select>
+            <input type="number" id="peso" placeholder="Peso (kg)" required>
+            <input type="number" id="altura" placeholder="Altura (cm)" required>
+            <input type="number" id="idade" placeholder="Idade (anos)" required>
+            <select id="nivelAtividade">
+                <option value="sedentario">Sedentário</option>
+                <option value="leve">Exercício leve</option>
+                <option value="moderado">Exercício moderado</option>
+                <option value="intenso">Exercício intenso</option>
+                <option value="atleta">Atleta</option>
+            </select>
+            <select id="objetivo">
+                <option value="bulking">Ganhar Massa (Bulking)</option>
+                <option value="cutting">Perder Gordura (Cutting)</option>
+            </select>
+            <button onclick="calcularDieta()">Calcular</button>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="macronutrientesChart"></canvas>
+        </div>
+    </section>
+
+    <footer>
+        © 2024 Guia Maromba do K7tão. Todos os direitos reservados. <br>
+        Contato: (xx) xxxx-xxxx | Instagram: @guiamarombadok7tao
+    </footer>
+
+    <script>
+        // Função para calcular a dieta
+        function calcularDieta() {
+            const sexo = document.getElementById("sexo").value;
+            const peso = parseFloat(document.getElementById("peso").value);
+            const altura = parseFloat(document.getElementById("altura").value);
+            const idade = parseFloat(document.getElementById("idade").value);
+            const nivelAtividade = document.getElementById("nivelAtividade").value;
+            const objetivo = document.getElementById("objetivo").value;
+
+            let fatorAtividade;
+            switch (nivelAtividade) {
+                case 'sedentario': fatorAtividade = 1.2; break;
+                case 'leve': fatorAtividade = 1.375; break;
+                case 'moderado': fatorAtividade = 1.55; break;
+                case 'intenso': fatorAtividade = 1.725; break;
+                case 'atleta': fatorAtividade = 1.9; break;
+            }
+
+            let tmb = sexo === "masculino"
+                ? 66 + (13.75 * peso) + (5 * altura) - (6.75 * idade)
+                : 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * idade);
+            const caloriasDiarias = tmb * fatorAtividade;
+
+            let caloriasParaObjetivo = objetivo === "bulking"
+                ? caloriasDiarias + 500
+                : caloriasDiarias - 500;
+
+            const proteinas = (caloriasParaObjetivo * 0.3) / 4;
+            const carboidratos = (caloriasParaObjetivo * 0.5) / 4;
+            const gorduras = (caloriasParaObjetivo * 0.2) / 9;
+
+            document.getElementById("resultado").innerHTML = `
+                <h3>Resultados</h3>
+                <p>Calorias Diárias: ${caloriasParaObjetivo.toFixed(0)} kcal</p>
+                <p>Proteínas: ${proteinas.toFixed(0)} g</p>
+                <p>Carboidratos: ${carboidratos.toFixed(0)} g</p>
+                <p>Gorduras: ${gorduras.toFixed(0)} g</p>
+            `;
+
+            const ctx = document.getElementById('macronutrientesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Proteínas', 'Carboidratos', 'Gorduras'],
+                    datasets: [{
+                        label: 'Macronutrientes (g)',
+                        data: [proteinas, carboidratos, gorduras],
+                        backgroundColor: ['#F4A261', '#E76F51', '#2A9D8F']
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

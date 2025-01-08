@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dieta - Guia Maromba do K7tão</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', Arial, sans-serif;
+        }
+
+        /* Paleta de cores */
+        :root {
+            --cor-texto: #000;
+            --cor-fundo: #FFF;
+            --cor-nav: #000;
+            --cor-texto-nav: #FFF;
+            --cor-ativo-nav: #F4A261;
+            --cor-fundo-secundario: #F8F8F8;
+            --cor-rodape: #000;
+            --cor-texto-rodape: #FFF;
+        }
+
+        /* Estilos Gerais */
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Lato', Arial, sans-serif;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--cor-fundo_secundario);
+            color: var(--cor-texto);
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 17px;
+            color: var(--cor-texto);
+        }
+
+        /* Navegação */
+        nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: var(--cor-nav);
+            color: var(--cor-texto-nav);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+            font-size: 23px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: nowrap;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: var(--cor-texto-nav);
+            text-decoration: none;
+            transition: color 0.3s, transform 0.3s;
+            font-size: 22px;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--cor-ativo-nav);
+            transform: scale(1.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--cor-ativo-nav);
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transition: width 0.3s, left 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Seção de Conteúdo */
+        .content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Formulário */
+        .form-container {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: var(--cor-fundo_secundario);
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container input,
+        .form-container select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            padding: 10px;
+            background-color: var(--cor-nav);
+            color: var(--cor-texto-nav);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-container button:hover {
+            background-color: var(--cor-ativo-nav);
+        }
+
+        /* Gráfico */
+        .chart-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+
+        /* Tabela */
+        .table-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            display: none;
+            /* Inicialmente oculta */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            background-color: var(--cor-fundo-secundario);
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--cor-rodape);
+            color: var(--cor-texto-rodape);
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+            font-size: 0.8em;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 0.9em;
+            }
+
+            .nav-links a {
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            header p {
+                font-size: 0.8em;
+            }
+
+            h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Guia Maromba do K7tão</h1>
+        <p>Seu guia para uma vida saudável e ativa</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="treinos.html">Treinos</a>
+                <a href="planinhatreino.html">Planilhas</a>
+                <a href="dieta.html" class="active">Dietas</a>
+                <a href="motivacao.html">Motivação</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="contato.html">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="content">
+        <h2>Calcule Sua Dieta</h2>
+        <div class="form-container">
+            <select id="sexo">
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+            </select>
+            <input type="number" id="peso" placeholder="Peso (kg)" required>
+            <input type="number" id="altura" placeholder="Altura (cm)" required>
+            <input type="number" id="idade" placeholder="Idade (anos)" required>
+            <select id="nivelAtividade">
+                <option value="sedentario">Sedentário</option>
+                <option value="leve">Exercício leve</option>
+                <option value="moderado">Exercício moderado</option>
+                <option value="intenso">Exercício intenso</option>
+                <option value="atleta">Atleta</option>
+            </select>
+            <select id="objetivo">
+                <option value="bulking">Ganhar Massa (Bulking)</option>
+                <option value="cutting">Perder Gordura (Cutting)</option>
+            </select>
+            <input type="number" id="bodyFat" placeholder="BF (%)" required>
+            <input type="number" id="caloriasDiarias1" placeholder="Calorias Diárias (kcal)" required>
+            <button onclick="calcularDieta()">Calcular</button>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="macronutrientesChart"></canvas>
+        </div>
+
+        <div id="resultado"></div>
+
+        <div class="table-container" id="tabela-container">
+            <h3>Progresso de 24 Semanas</h3>
+            <button onclick="toggleTabela()">Acessar Progresso de 24 Semanas</button>
+            <div id="tabela" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Semana</th>
+                            <th>Peso (kg)</th>
+                            <th>Medida (cm)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-corpo">
+                        <!-- Os dados da tabela serão preenchidos aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2024 Guia Maromba do K7tão. Todos os direitos reservados.
+    </footer>
+
+    <script>
+        function dieta() {
+            const peso = document.getElementById('peso').value;
+
+            const pesoProteinas = (peso * 2);
+            const pesoCarboidrato = (peso * 4);
+            const pesoGordura = (peso * 1);
+
+            const proteinasKcal = (pesoProteina * 3);
+            const carboidratoKcal = (pesoCarboidrato * 4);
+            const gorduraKcal = (pesoGordura * 9);
+
+        }
+
+        // Função para calcular a dieta
+        function calcularDieta() {
+            const sexo = document.getElementById("sexo").value;
+            const peso = parseFloat(document.getElementById("peso").value);
+            const altura = parseFloat(document.getElementById("altura").value);
+            const idade = parseFloat(document.getElementById("idade").value);
+            const nivelAtividade = document.getElementById("nivelAtividade").value;
+            const objetivo = document.getElementById("objetivo").value;
+            const bodyFat = parseFloat(document.getElementById("bodyFat").value);
+            const caloriasDiarias1 = parseFloat(document.getElementById("caloriasDiarias1").value);
+
+            let fatorAtividade;
+            switch (nivelAtividade) {
+                case 'sedentario':
+                    fatorAtividade = 1.2;
+                    break;
+                case 'leve':
+                    fatorAtividade = 1.375;
+                    break;
+                case 'moderado':
+                    fatorAtividade = 1.55;
+                    break;
+                case 'intenso':
+                    fatorAtividade = 1.725;
+                    break;
+                case 'atleta':
+                    fatorAtividade = 1.9;
+                    break;
+            }
+
+            let tmb;
+            if (sexo === "masculino") {
+                tmb = 66.5 + (13.75 * peso) + (5 * altura) - (6.75 * idade);
+            } else {
+                tmb = 655 + (9.56 * peso) + (1.85 * altura) - (4.68 * idade);
+            }
+
+            const caloriasDiarias = tmb * fatorAtividade;
+
+            // Cálculo de macronutrientes
+            let caloriasParaObjetivo;
+            if (objetivo === "bulking") {
+                caloriasParaObjetivo = caloriasDiarias + 500; // Superávit
+            } else {
+                caloriasParaObjetivo = caloriasDiarias - 500; // Déficit
+            }
+
+            const proteinas = (caloriasParaObjetivo * 0.3) / 4;
+            const carboidratos = (caloriasParaObjetivo * 0.5) / 4;
+            const gorduras = (caloriasParaObjetivo * 0.2) / 9;
+
+            // Exibir resultados
+            const resultado = `
+                <h3>Resultados</h3>
+                <p>Calorias Diárias: ${caloriasParaObjetivo.toFixed(0)} kcal - <button onclick="dieta()">Calcular</button> </p>
+                <p>Proteínas: ${proteinas.toFixed(0)} g</p>
+                <p>Carboidratos: ${carboidratos.toFixed(0)} g</p>
+                <p>Gorduras: ${gorduras.toFixed(0)} g</p>
+            `;
+            document.getElementById("resultado").innerHTML = resultado;
+
+            // Gráfico
+            const ctx = document.getElementById('macronutrientesChart').getContext('2d');
+            const macronutrientesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Proteínas', 'Carboidratos', 'Gorduras'],
+                    datasets: [{
+                        label: 'Gramas',
+                        data: [proteinas, carboidratos, gorduras],
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Função para mostrar/ocultar a tabela de progresso
+        function toggleTabela() {
+            const tabelaContainer = document.getElementById("tabela");
+            if (tabelaContainer.style.display === "none") {
+                tabelaContainer.style.display = "block"; // Mostra a tabela
+            } else {
+                tabelaContainer.style.display = "none"; // Oculta a tabela
+            }
+        }
+    </script>
+</body>
+
+</html>

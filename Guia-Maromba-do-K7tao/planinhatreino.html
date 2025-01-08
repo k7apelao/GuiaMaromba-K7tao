@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planilha de Treinos - Guia Maromba do K7tão</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lato', Arial, sans-serif;
+        }
+
+        /* Paleta de cores */
+        :root {
+            --cor-texto: #000;
+            --cor-fundo: #fff;
+            --cor-nav: #000;
+            --cor-texto-nav: #fff;
+            --cor-ativo-nav: #28a745;
+            --cor-fundo-secundario: #f4f4f4;
+            --cor-rodape: #000;
+            --cor-texto-rodape: #fff;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--cor-fundo-secundario);
+            color: var(--cor-texto);
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--cor-nav);
+            color: var(--cor-texto-nav);
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--cor-texto-nav);
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--cor-ativo-nav);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--cor-ativo-nav);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            padding: 20px;
+            background-color: var(--cor-fundo-secundario);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn-submit {
+            background-color: var(--cor-ativo-nav);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            display: block;
+            margin: 0 auto;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+
+        .saved-trainings {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .saved-trainings h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .saved-trainings ul {
+            list-style: none;
+        }
+
+        .saved-trainings li {
+            background-color: var(--cor-fundo-secundario);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--cor-rodape);
+            color: var(--cor-texto-rodape);
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navegação -->
+    <header>
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">Início</a>
+                <a href="treinos.html">Treinos</a>
+                <a href="planinhatreino.html" class="active">Planilhas</a>
+                <a href="dieta.html">Dietas</a>
+                <a href="motivacao.html">Motivação</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="contato.html">Contato</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo -->
+    <main>
+        <h1 class="title">Planilha de Treinos</h1>
+        <p class="description">Organize seus treinos para alcançar seus objetivos!</p>
+
+        <form id="form-treino">
+            <div class="form-group">
+                <label for="nome-treino">Nome do Treino</label>
+                <input type="text" id="nome-treino" placeholder="Ex: Treino de Peito" required>
+            </div>
+            <div class="form-group">
+                <label for="exercicios">Exercícios</label>
+                <textarea id="exercicios" rows="4" placeholder="Ex: Supino reto, Crucifixo inclinado"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="series">Séries</label>
+                <input type="number" id="series" placeholder="Ex: 4" required>
+            </div>
+            <div class="form-group">
+                <label for="repeticoes">Repetições</label>
+                <input type="number" id="repeticoes" placeholder="Ex: 10" required>
+            </div>
+            <button type="submit" class="btn-submit">Salvar Treino</button>
+        </form>
+
+        <div class="saved-trainings">
+            <h2>Treinos Salvos</h2>
+            <ul id="lista-treinos"></ul>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>© 2024 Guia Maromba do K7tão. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('form-treino');
+        const listaTreinos = document.getElementById('lista-treinos');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome-treino').value;
+            const exercicios = document.getElementById('exercicios').value;
+            const series = document.getElementById('series').value;
+            const repeticoes = document.getElementById('repeticoes').value;
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <h3>${nome}</h3>
+                <p><strong>Exercícios:</strong> ${exercicios}</p>
+                <p><strong>Séries:</strong> ${series}</p>
+                <p><strong>Repetições:</strong> ${repeticoes}</p>
+            `;
+            listaTreinos.appendChild(li);
+
+            form.reset();
+        });
+    </script>
+</body>
+
+</html>
